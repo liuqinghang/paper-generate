@@ -1,12 +1,11 @@
 package com.work.university.controller;
 
 import com.work.university.domain.QuestionType;
+import com.work.university.domain.TestQuestion;
 import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.work.university.tools.domain.AjaxResult;
 
@@ -23,7 +22,10 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-
+    /**
+     * 获取试题类型
+     * @return
+     */
     @GetMapping("/getType")
     public AjaxResult getType(){
         List<QuestionType> res = questionService.getType();
@@ -32,5 +34,27 @@ public class QuestionController {
         } else {
             return AjaxResult.error("无");
         }
+    }
+    /**
+     * 获取所有试题
+     *
+     */
+    @GetMapping("getQuestion")
+    public AjaxResult getQuestion(){
+
+        List<TestQuestion> res = questionService.getQuestion();
+
+        return AjaxResult.success(res);
+    }
+
+    /**
+     * 保存试题信息
+     *
+     *
+     */
+    @PostMapping("/saveQuestion")
+    public AjaxResult saveQuestion(@RequestBody TestQuestion question){
+        questionService.saveQuestion(question);
+        return AjaxResult.success();
     }
 }

@@ -3,6 +3,7 @@ package com.work.university.service;
 
 
 import com.work.university.domain.QuestionType;
+import com.work.university.domain.TestQuestion;
 
 import java.util.List;
 
@@ -15,4 +16,16 @@ public interface QuestionService {
      * @return
      */
     public List<QuestionType> getType();
+
+    /**
+     * 保存试题
+     *
+     */
+    public void saveQuestion(TestQuestion question);
+
+    /**
+     * 获取所有试题
+     * @return
+     */
+    public List getQuestion();
 }

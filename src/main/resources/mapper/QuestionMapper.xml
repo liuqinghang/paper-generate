@@ -5,9 +5,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.work.university.mapper.QuestionMapper">
 
     <select id="getAllType" resultType="com.work.university.domain.QuestionType">
-        select type,type_name,remark
+        select type ,type_name,remark
         from question_type
     </select>
+
+    <select id="getQuestion" parameterType="com.work.university.domain.TestQuestion" resultType="com.work.university.domain.TestQuestion">
+        select q.question_id, q.content, q.answer, q.count, q.type, t.type_name, s.subject_name as subject, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+        from test_question as q
+				inner join question_type as t on t.type = q.type
+				left join user on user.user_id	= q.master
+				left join subject as s on s.subject_id = q.subject_id
+
+    </select>
+
+    <insert id="saveQuestion" parameterType="com.work.university.domain.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
+        insert into test_question
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="content != null and content != ''">content,</if>
+                    <if test="answer != null">answer,</if>
+                    <if test="count != null">count,</if>
+                    <if test="type != null">type,</if>
+                    <if test="subject != null">subject_id,</if>
+                    <if test="difficulty != null">difficulty,</if>
+                    <if test="createTime != null">create_time,</if>
+                    <if test="master != null">master,</if>
+                    <if test="updateTime != null">update_time,</if>
+                    <if test="updateUser != null">update_user,</if>
+                    <if test="permission != null">permission,</if>
+                    <if test="star != null">star,</if>
+                    <if test="delFlag != null">del_flag,</if>
+                 </trim>
+                <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="content != null and content != ''">#{content},</if>
+                    <if test="answer != null">#{answer},</if>
+                    <if test="count != null">#{count},</if>
+                    <if test="subject != null">#{subject},</if>
+                    <if test="type != null">#{type},</if>
+                    <if test="difficulty != null">#{difficulty},</if>
+                    <if test="createTime != null">#{createTime},</if>
+                    <if test="master != null">#{master},</if>
+                    <if test="updateTime != null">#{updateTime},</if>
+                    <if test="updateUser != null">#{updateUser},</if>
+                    <if test="permission != null">#{permission},</if>
+                    <if test="star != null">#{star},</if>
+                    <if test="delFlag != null">#{delFlag}</if>
+                 </trim>
+    </insert>
+
+    <update id="modifyQuestion" parameterType="com.work.university.domain.TestQuestion">
+        update test_question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="answer != null">answer = #{answer},</if>
+            <if test="count != null">count = #{count},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="difficulty != null">difficulty = #{difficulty},</if>
+            <if test="master != null">master = #{master},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="permission != null">permission = #{permission},</if>
+            <if test="star != null">star = #{star},</if>
+            <if test="delFlag != null">del_flag = #{delFlag}</if>
+        </trim>
+        where question_id = #{questionId}
+    </update>
+
 
 <!--    <sql id="selectTopicVo">-->
 <!--        select id, content, begin_date, end_date, time from ido_topic-->
