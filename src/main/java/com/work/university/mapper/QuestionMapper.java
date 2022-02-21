@@ -1,6 +1,7 @@
 package com.work.university.mapper;
 
 import com.work.university.domain.QuestionType;
+import com.work.university.domain.Selector;
 import com.work.university.domain.TestQuestion;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,8 +16,15 @@ public interface QuestionMapper {
      * 获取所有试题类型
      * @return
      */
-    public List getAllType();
-
+    public List<Selector> getAllType();
+    /**
+     * 获取科目类型
+     */
+    public  List<Selector> getSubject();
+    /**
+     * 获取科目类型
+     */
+    public  List<Selector> getChapter(String subjectId);
     /**
      * 添加试题
      */
@@ -25,6 +33,6 @@ public interface QuestionMapper {
     /**
      *
      */
-    public List getQuestion();
+    public List<TestQuestion> getQuestion();
 
 }

@@ -1,6 +1,7 @@
 package com.work.university.controller;
 
 import com.work.university.domain.QuestionType;
+import com.work.university.domain.Selector;
 import com.work.university.domain.TestQuestion;
 import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class QuestionController {
      * 获取试题类型
      * @return
      */
-    @GetMapping("/getType")
-    public AjaxResult getType(){
-        List<QuestionType> res = questionService.getType();
+    @GetMapping("/getQuestionType")
+    public AjaxResult getQuestionType(){
+        List<Selector> res = questionService.getQuestionType();
         if(res!=null && res.size() > 0) {
             return AjaxResult.success(res);
         } else {
@@ -36,14 +37,38 @@ public class QuestionController {
         }
     }
     /**
+     * 获取科目类型
+     */
+    @GetMapping("/getSubject")
+    public AjaxResult getSubject(){
+        List<Selector> res = questionService.getSubject();
+        if(res!=null && res.size() > 0) {
+            return AjaxResult.success(res);
+        } else {
+            return AjaxResult.error("无");
+        }
+    }
+
+    /**
+     * 获取科目对应章节
+     */
+    @GetMapping("/getChapter")
+    public AjaxResult getChapter(@RequestParam("subjectId") String subjectId) {
+        List<Selector> res = questionService.getChapter(subjectId);
+        if(res!=null && res.size() > 0) {
+            return AjaxResult.success(res);
+        } else {
+            return AjaxResult.error("无");
+        }
+    }
+
+    /**
      * 获取所有试题
      *
      */
-    @GetMapping("getQuestion")
+    @GetMapping("/getQuestion")
     public AjaxResult getQuestion(){
-
         List<TestQuestion> res = questionService.getQuestion();
-
         return AjaxResult.success(res);
     }
 
