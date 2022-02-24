@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,6 +50,17 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Selector> getChapter(String subjectId) {
         return questionMapper.getChapter(subjectId);
+    }
+
+    /**
+     * 获取知识点
+     *
+     * @param subjectId
+     */
+    @Override
+    public Map<String, String> getKnowledge(String subjectId, String chapterId) {
+//        return questionMapper.getKnowledge(subjectId,chapterId);
+        return null;
     }
 
     /**

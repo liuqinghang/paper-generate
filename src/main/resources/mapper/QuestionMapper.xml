@@ -5,17 +5,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.work.university.mapper.QuestionMapper">
 
     <select id="getAllType" resultType="com.work.university.domain.Selector">
-        select type as selectValue,type_name as selectLabel, "question_type" as selectKey
+        select type as selectValue,type_name as selectLabel, type as selectKey
         from question_type
     </select>
 
     <select id="getSubject" resultType="com.work.university.domain.Selector">
-        select subject_id as selectValue,subject_name as selectLabel, "subject" as selectKey
+        select subject_id as selectValue,subject_name as selectLabel, subject_id as selectKey
         from subject
     </select>
 
     <select id="getChapter" parameterType="string" resultType="com.work.university.domain.Selector">
-        select chapter_id as selectValue,chapter as selectLabel, "chapter" as selectKey
+        select chapter_id as selectValue,chapter as selectLabel, chapter_id as selectKey
         from chapter
         where subject_id = #{subjectId}
     </select>

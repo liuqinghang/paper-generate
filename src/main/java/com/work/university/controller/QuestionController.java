@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.work.university.tools.domain.AjaxResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 路瞳
@@ -61,6 +62,20 @@ public class QuestionController {
             return AjaxResult.error("无");
         }
     }
+    /**
+     * 获取对应的知识点
+     */
+    @GetMapping("/getKnowledge")
+    public AjaxResult getKnowledge(@RequestParam(value="subjectId", required = false) String subjectId,
+                                   @RequestParam(value="chapterId",required = false) String chapterId) {
+        Map<String,String> res= questionService.getKnowledge(subjectId,chapterId);
+        if(res!=null && res.size() > 0) {
+            return AjaxResult.success(res);
+        } else {
+            return AjaxResult.error("无");
+        }
+    }
+
 
     /**
      * 获取所有试题

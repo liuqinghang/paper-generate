@@ -2,11 +2,11 @@ package com.work.university.service;
 
 
 
-import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
 import com.work.university.domain.TestQuestion;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 路瞳
@@ -25,6 +25,11 @@ public interface QuestionService {
      * 获取科目对应的章节
      */
     public List<Selector> getChapter(String subjectId);
+
+    /**
+     * 获取知识点
+     */
+    public Map<String,String> getKnowledge(String subjectId, String chapterId);
     /**
      * 保存试题
      *

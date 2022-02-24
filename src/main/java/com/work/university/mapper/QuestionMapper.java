@@ -22,7 +22,7 @@ public interface QuestionMapper {
      */
     public  List<Selector> getSubject();
     /**
-     * 获取科目类型
+     * 获取章节类型
      */
     public  List<Selector> getChapter(String subjectId);
     /**
