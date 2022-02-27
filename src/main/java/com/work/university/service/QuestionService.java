@@ -40,5 +40,5 @@ public interface QuestionService {
      * 获取所有试题
      * @return
      */
-    public List getQuestion();
+    public List getQuestion(TestQuestion question);
 }

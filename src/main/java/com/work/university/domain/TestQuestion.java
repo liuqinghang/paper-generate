@@ -15,7 +15,10 @@ public class TestQuestion {
     public int count;
     public int type;
     public String typeName;
+    public int subjectId;
     public String subject;
+    public String chapterId;
+    public String chapter;
     public float difficulty;
     public int master;
     public String masterName;

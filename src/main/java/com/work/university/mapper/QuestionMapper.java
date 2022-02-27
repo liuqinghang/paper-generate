@@ -29,10 +29,13 @@ public interface QuestionMapper {
      * 添加试题
      */
     public void saveQuestion(TestQuestion question);
-
     /**
-     *
+     * 添加试题知识点相关信息
      */
-    public List<TestQuestion> getQuestion();
+    public void saveQuestionKnowledge(TestQuestion question);
+    /**
+     * 获取所有试题
+     */
+    public List<TestQuestion> getQuestion(TestQuestion question);
 
 }

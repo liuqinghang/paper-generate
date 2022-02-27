@@ -1,5 +1,6 @@
 package com.work.university.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
 import com.work.university.domain.TestQuestion;
@@ -76,14 +77,13 @@ public class QuestionController {
         }
     }
 
-
     /**
      * 获取所有试题
      *
      */
-    @GetMapping("/getQuestion")
-    public AjaxResult getQuestion(){
-        List<TestQuestion> res = questionService.getQuestion();
+    @PostMapping("/getQuestion")
+    public AjaxResult getQuestion(@RequestBody TestQuestion question){
+        List<TestQuestion> res = questionService.getQuestion(question);
         return AjaxResult.success(res);
     }
 

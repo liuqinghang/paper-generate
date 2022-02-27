@@ -21,12 +21,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getQuestion" parameterType="com.work.university.domain.TestQuestion" resultType="com.work.university.domain.TestQuestion">
-        select q.question_id, q.content, q.answer, q.count, q.type, t.type_name, s.subject_name as subject, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
         from test_question as q
-				inner join question_type as t on t.type = q.type
-				left join user on user.user_id	= q.master
-				left join subject as s on s.subject_id = q.subject_id
-
+        inner join question_knowledge as k on k.question_id = q.question_id
+        left join user on user.user_id	= q.master
+        left join subject as s on s.subject_id = k.subject_id
+        left join question_type as t on t.type = k.type
+        left join chapter as c on c.chapter_id = k.chapter_id
+        <where>
+            <if test="questionId != null  and questionId >0"> and q.question_id = #{questionId}</if>
+            <if test="type != null and type >0"> and q.type = #{type}</if>
+            <if test="subject != null and subject >0"> and q.subject_id = #{subject}</if>
+            <if test="master != null and master != ''"> and q.master = #{master}</if>
+            <if test="chapter != null and chapter != ''"> and k.chapter_id = #{chapter}</if>
+            <if test="content != null and content != ''">and q.content like concat('%',#{content},'%')</if>
+        </where>
     </select>
 
     <insert id="saveQuestion" parameterType="com.work.university.domain.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
@@ -61,6 +70,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     <if test="star != null">#{star},</if>
                     <if test="delFlag != null">#{delFlag}</if>
                  </trim>
+    </insert>
+
+    <insert id="saveQuestionKnowledge" parameterType="com.work.university.domain.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
+        insert into question_knowledge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="questionId != null and questionId != ''">question_id,</if>
+            <if test="subject != null">subject_id,</if>
+            <if test="type != null">type,</if>
+            <if test="chapter != null">chapter_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="master != null">create_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="questionId != null and questionId != ''">#{questionId},</if>
+            <if test="subject != null">#{subject},</if>
+            <if test="type != null">#{type},</if>
+            <if test="chapter != null">#{chapter},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="master != null">#{master},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="delFlag != null">#{delFlag}</if>
+        </trim>
     </insert>
 
     <update id="modifyQuestion" parameterType="com.work.university.domain.TestQuestion">

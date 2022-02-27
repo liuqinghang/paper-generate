@@ -76,8 +76,8 @@ public class QuestionServiceImpl implements QuestionService {
         question.setCreateTime(new Date());
         question.setDelFlag("0");
         questionMapper.saveQuestion(question);
-        Integer id = question.getQuestionId();
-        String aaa = id.toString();
+        questionMapper.saveQuestionKnowledge(question);
+
     }
 
     /**
@@ -86,8 +86,8 @@ public class QuestionServiceImpl implements QuestionService {
      * @return
      */
     @Override
-    public List getQuestion() {
-        return questionMapper.getQuestion();
+    public List getQuestion(TestQuestion question) {
+        return questionMapper.getQuestion(question);
     }
 
 
