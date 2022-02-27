@@ -1,9 +1,8 @@
-package com.work.university.domain.question;
+package com.work.university.domain;
 
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author 路瞳
@@ -14,14 +13,13 @@ public class TestQuestion {
     public String content;
     public String answer;
     public int count;
-    public List<SingleChoose> detail;
     public int type;
     public String typeName;
     public int subjectId;
     public String subject;
     public String chapterId;
     public String chapter;
-    public double difficulty;
+    public float difficulty;
     public int master;
     public String masterName;
     public Date createTime;
@@ -29,8 +27,6 @@ public class TestQuestion {
     public Date updateTime;
     public String updateUser;
     public String permission;
-    public double star;
-    public double score;
-    public List<Integer> pointIds;
+    public float star;
     public String delFlag;
 }

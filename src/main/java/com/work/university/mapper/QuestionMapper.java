@@ -1,12 +1,9 @@
 package com.work.university.mapper;
 
+import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
-import com.work.university.domain.question.SingleChoose;
-import com.work.university.domain.question.TestQuestion;
+import com.work.university.domain.TestQuestion;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -37,29 +34,8 @@ public interface QuestionMapper {
      */
     public void saveQuestionKnowledge(TestQuestion question);
     /**
-     * 保存单选题对应选项
-     */
-    public void saveQuestionSingleChoose(List<SingleChoose> list);
-    /**
-     * 获取单选题对应的所有选项
-     */
-    public List<SingleChoose> getQuestionSingleChoose(String questionId);
-    /**
      * 获取所有试题
      */
     public List<TestQuestion> getQuestion(TestQuestion question);
-
-    public TestQuestion[] getQuestionThroughPaperGenerate(TestQuestion question);
-
-    /**
-     * 测试redis 浏览量缓存
-     * @param questionId
-     * @return
-     */
-    @Select("SELECT page_view FROM question_view WHERE question_id=#{questionId}")
-    Integer getLikesByPrimaryKey(Integer questionId);
-
-    @Update("UPDATE question_view SET page_view=#{pageView} WHERE question_id=#{questionId}")
-    void setLikesByPrimaryKey(@Param("pageView")Integer pageView, @Param("questionId")Integer questionId);
 
 }
