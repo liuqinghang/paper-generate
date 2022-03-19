@@ -1,8 +1,7 @@
 package com.work.university.mapper;
 
-import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
-import com.work.university.domain.TestQuestion;
+import com.work.university.domain.question.TestQuestion;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -38,4 +37,5 @@ public interface QuestionMapper {
      */
     public List<TestQuestion> getQuestion(TestQuestion question);
 
+    public TestQuestion[] getQuestionThroughPaperGenerate(TestQuestion question);
 }

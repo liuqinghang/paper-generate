@@ -1,16 +1,16 @@
 package com.work.university.controller;
 
-import com.work.university.domain.QuestionType;
+import com.work.university.domain.RuleBean;
 import com.work.university.domain.Selector;
-import com.work.university.domain.TestQuestion;
+import com.work.university.domain.paper.Paper;
+import com.work.university.domain.question.TestQuestion;
+import com.work.university.service.PaperService;
 import com.work.university.service.QuestionService;
 import com.work.university.tools.domain.AjaxResult;
+import com.work.university.tools.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,25 +24,43 @@ public class PaperController {
 
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private PaperService paperService;
 
     /**
-     * 获取试题类型
+     * 获取智能组卷结果
      * @return
      */
-    @GetMapping("/getQuestionType")
-    public AjaxResult getType(){
-        List<Selector> res = questionService.getQuestionType();
-        if(res!=null && res.size() > 0) {
-            return AjaxResult.success(res);
-        } else {
-            return AjaxResult.error("无");
+    @GetMapping("/getSmartPaperList")
+    public AjaxResult getSmartPaperList(){
+        Paper res = paperService.getSmartPaper(new RuleBean(),questionService);
+        return AjaxResult.success(res);
+    }
+    /**
+     * TODO
+     * 保存手动组卷结果
+     */
+    @PostMapping("/savePaper")
+    public AjaxResult savePaper(@RequestBody Paper paper){
+
+        return AjaxResult.success();
+    }
+    /**
+     * TODO
+     * 获取科目对应章节的下拉树列表
+     *
+     */
+    @GetMapping("/getTreeSelect")
+    public AjaxResult saveQuestion(@RequestParam(name = "subject",required = false)String subject){
+        if(StringUtils.isNotNull(subject) && !subject.equals("")){
+
         }
+        paperService.getChapterTree(subject);
+        return AjaxResult.success();
     }
 
     /**
-     * 保存试题信息
-     *
-     *
+     * 保存试卷结果
      */
     @GetMapping("/savePaper")
     public AjaxResult saveQuestion(@RequestBody TestQuestion question){

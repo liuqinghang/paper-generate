@@ -1,9 +1,7 @@
 package com.work.university.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
-import com.work.university.domain.TestQuestion;
+import com.work.university.domain.question.TestQuestion;
 import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -89,7 +87,6 @@ public class QuestionController {
 
     /**
      * 保存试题信息
-     *
      *
      */
     @PostMapping("/saveQuestion")

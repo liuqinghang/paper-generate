@@ -1,4 +1,4 @@
-package com.work.university.domain;
+package com.work.university.domain.question;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;

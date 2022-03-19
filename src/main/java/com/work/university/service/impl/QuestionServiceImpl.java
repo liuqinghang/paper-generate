@@ -1,14 +1,12 @@
 package com.work.university.service.impl;
 
 
-import com.work.university.domain.QuestionType;
 import com.work.university.domain.Selector;
-import com.work.university.domain.TestQuestion;
+import com.work.university.domain.question.TestQuestion;
 import com.work.university.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.work.university.service.QuestionService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -88,6 +86,30 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List getQuestion(TestQuestion question) {
         return questionMapper.getQuestion(question);
+    }
+
+    /**
+     * 根据 rule的设定 获取对应的试题集
+     *
+     * @param type     试题类型
+     * @param idString 章节列表
+     */
+    @Override
+    public TestQuestion[] getQuestionArray(int type, String idString){
+        TestQuestion question = new TestQuestion();
+        question.setType(type);
+        question.setChapterId(idString.substring(1,idString.length()-1));
+        return questionMapper.getQuestionThroughPaperGenerate(question);
+    }
+
+    /**
+     * 根据 rule的设定 获取对应的试题集
+     *
+     * @param question 排除当前节点
+     */
+    @Override
+    public TestQuestion[] getQuestionListWithOutSId(TestQuestion question) {
+        return questionMapper.getQuestionThroughPaperGenerate(question);
     }
 
 
