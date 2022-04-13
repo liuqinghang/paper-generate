@@ -2,43 +2,44 @@ spring:
     datasource:
         name: paper_generate
         url: jdbc:mysql://localhost:3306/paper_generate?serverTimezone=GMT
-        username: root  #ÓÃ»§Ãû
-        password: 123456  #ÃÜÂë
+        username: root  #ç”¨æˆ·å
+        password: 123456  #å¯†ç 
         driver-class-name: com.mysql.cj.jdbc.Driver
-    # ÎÄ¼şÉÏ´«
+    # æ–‡ä»¶ä¸Šä¼ 
     servlet:
         multipart:
-        # µ¥¸öÎÄ¼ş´óĞ¡
+        # å•ä¸ªæ–‡ä»¶å¤§å°
         max-file-size:  10MB
-        # ÉèÖÃ×ÜÉÏ´«µÄÎÄ¼ş´óĞ¡
+        # è®¾ç½®æ€»ä¸Šä¼ çš„æ–‡ä»¶å¤§å°
         max-request-size:  20MB
+    mvc:
+        static-path-pattern: /**
 
-
-# ¿ª·¢»·¾³ÅäÖÃ
+# å¼€å‘ç¯å¢ƒé…ç½®
 server:
-    # ·şÎñÆ÷µÄHTTP¶Ë¿Ú£¬Ä¬ÈÏÎª8080
+    # æœåŠ¡å™¨çš„HTTPç«¯å£ï¼Œé»˜è®¤ä¸º8080
     port: 8080
     servlet:
-        # Ó¦ÓÃµÄ·ÃÎÊÂ·¾¶
+        # åº”ç”¨çš„è®¿é—®è·¯å¾„
         context-path: /
     tomcat:
-        # tomcatµÄURI±àÂë
+        # tomcatçš„URIç¼–ç 
         uri-encoding: UTF-8
-        # tomcat×î´óÏß³ÌÊı£¬Ä¬ÈÏÎª200
+        # tomcatæœ€å¤§çº¿ç¨‹æ•°ï¼Œé»˜è®¤ä¸º200
         max-threads: 800
-        # TomcatÆô¶¯³õÊ¼»¯µÄÏß³ÌÊı£¬Ä¬ÈÏÖµ25
+        # Tomcatå¯åŠ¨åˆå§‹åŒ–çš„çº¿ç¨‹æ•°ï¼Œé»˜è®¤å€¼25
         min-spare-threads: 30
 
-# MyBatisÅäÖÃ
+# MyBatisé…ç½®
 mybatis:
-    # ËÑË÷Ö¸¶¨°ü±ğÃû
+    # æœç´¢æŒ‡å®šåŒ…åˆ«å
     typeAliasesPackage: domain
-    # ÅäÖÃmapperµÄÉ¨Ãè£¬ÕÒµ½ËùÓĞµÄmapper.xmlÓ³ÉäÎÄ¼ş
+    # é…ç½®mapperçš„æ‰«æï¼Œæ‰¾åˆ°æ‰€æœ‰çš„mapper.xmlæ˜ å°„æ–‡ä»¶
     mapperLocations: classpath*:mapper/*Mapper.xml
-    # ¼ÓÔØÈ«¾ÖµÄÅäÖÃÎÄ¼ş
+    # åŠ è½½å…¨å±€çš„é…ç½®æ–‡ä»¶
     configLocation: classpath:mybatis/mybatis-config.xml
 
-# ÈÕÖ¾ÅäÖÃ
+# æ—¥å¿—é…ç½®
 logging:
     level:
         com.work.university: debug
