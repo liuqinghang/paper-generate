@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getQuestionThroughPaperGenerate" parameterType="com.work.university.domain.question.TestQuestion" resultType="com.work.university.domain.question.TestQuestion">
-        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, c.chapter_id , c.chapter, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
         from test_question as q
         inner join question_knowledge as k on k.question_id = q.question_id
         left join user on user.user_id	= q.master
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="type != null and type >0"> and k.type = #{type}</if>
             <if test="chapterId != null and chapterId != ''"> and k.chapter_id in
                 <foreach item="item" index="index" collection="chapterId.split(',')" open="(" separator="," close=")">
-                    #{item}
+                    <if test="item != null and item != ''">#{item}</if>
                 </foreach>
             </if>
 
@@ -117,6 +117,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null">#{delFlag}</if>
         </trim>
     </insert>
+
+    <insert id="saveQuestionSingleChoose" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="choosedId">
+        insert into single_choose (question_id, choosed_content)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.questionId},
+            #{item.choosedContent}
+            )
+        </foreach>
+    </insert>
+    <select id="getQuestionSingleChoose" parameterType="String" resultType="com.work.university.domain.question.SingleChoose">
+        select choosed_id, question_id, choosed_content
+        from single_choose
+        <where> question_id in
+            <foreach item="item" index="index" collection="questionId.split(',')" open="(" separator="," close=")">
+                <if test="item != null and item != ''">#{item}</if>
+            </foreach>
+        </where>
+    </select>
 
     <update id="modifyQuestion" parameterType="com.work.university.domain.question.TestQuestion">
         update test_question

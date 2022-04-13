@@ -1,6 +1,7 @@
 package com.work.university.mapper;
 
 import com.work.university.domain.Selector;
+import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,6 +33,14 @@ public interface QuestionMapper {
      * 添加试题知识点相关信息
      */
     public void saveQuestionKnowledge(TestQuestion question);
+    /**
+     * 保存单选题对应选项
+     */
+    public void saveQuestionSingleChoose(List<SingleChoose> list);
+    /**
+     * 获取单选题对应的所有选项
+     */
+    public List<SingleChoose> getQuestionSingleChoose(String questionId);
     /**
      * 获取所有试题
      */

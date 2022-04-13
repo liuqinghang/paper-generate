@@ -14,6 +14,7 @@ public class TestQuestion {
     public String content;
     public String answer;
     public int count;
+    public List<SingleChoose> detail;
     public int type;
     public String typeName;
     public int subjectId;

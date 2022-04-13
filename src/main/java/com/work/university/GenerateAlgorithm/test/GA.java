@@ -101,8 +101,7 @@ public class GA {
             } else {
                 int type = getTypeByIndex(i, rule);
                 // getQuestionArray()用来选择指定类型和知识点的试题数组
-                TestQuestion[] singleArray = questionService.getQuestionArray(type, idString.substring(1, idString
-                        .indexOf("]")));
+                TestQuestion[] singleArray = questionService.getQuestionArray(type, idString);
                 child.saveQuestion(i, singleArray[(int) (Math.random() * singleArray.length)]);
             }
         }
@@ -111,8 +110,7 @@ public class GA {
                 child.saveQuestion(i, parent2.getQuestion(i));
             } else {
                 int type = getTypeByIndex(i, rule);
-                TestQuestion[] singleArray = questionService.getQuestionArray(type, idString.substring(1, idString
-                        .indexOf("]")));
+                TestQuestion[] singleArray = questionService.getQuestionArray(type, idString);
                 child.saveQuestion(i, singleArray[(int) (Math.random() * singleArray.length)]);
             }
         }

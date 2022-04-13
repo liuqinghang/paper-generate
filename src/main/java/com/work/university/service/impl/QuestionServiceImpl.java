@@ -1,13 +1,19 @@
 package com.work.university.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.work.university.domain.Selector;
+import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import com.work.university.mapper.QuestionMapper;
+import com.work.university.tools.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.work.university.service.QuestionService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +24,8 @@ import java.util.Map;
  */
 @Service
 public class QuestionServiceImpl implements QuestionService {
+    private final Integer SINGLE_CHOOSE = 1;
+    private final Integer MULTI_CHOOSE = 2;
 
     @Autowired
     private QuestionMapper questionMapper;
@@ -73,8 +81,36 @@ public class QuestionServiceImpl implements QuestionService {
         question.setMaster(1);
         question.setCreateTime(new Date());
         question.setDelFlag("0");
+        String chooseStr = null;
+        System.out.println(question.getContent());
+        if (question.getContent().contains("\\$")) {
+            String[] tar = question.getContent().split("\\$");
+            question.setContent(tar[0].substring(0,tar[0].length()-1));
+            chooseStr = tar[1];
+        }
+
         questionMapper.saveQuestion(question);
         questionMapper.saveQuestionKnowledge(question);
+
+        if (StringUtils.isNotNull(chooseStr)) {
+            List<SingleChoose> res = new ArrayList<SingleChoose>();
+            if (SINGLE_CHOOSE == question.getType() || MULTI_CHOOSE == question.getType()) {
+                JSONArray jsonArray = JSONArray.parseArray(chooseStr);
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    SingleChoose choose = new SingleChoose();
+                    choose.setQuestionId(question.getQuestionId());
+                    choose.setChoosedContent(jsonArray.getString(i));
+                    res.add(choose);
+                }
+            } else {
+                // 非选择题
+                SingleChoose choose = new SingleChoose();
+                choose.setQuestionId(question.getQuestionId());
+                choose.setChoosedContent(chooseStr);
+                res.add(choose);
+            }
+            questionMapper.saveQuestionSingleChoose(res);
+        }
 
     }
 
@@ -89,16 +125,26 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
+     * 获取单选题对应的所有选项
+     *
+     * @param questionId
+     */
+    @Override
+    public List<SingleChoose> getQuestionSingleChoose(String questionId) {
+        return questionMapper.getQuestionSingleChoose(questionId);
+    }
+
+    /**
      * 根据 rule的设定 获取对应的试题集
      *
      * @param type     试题类型
      * @param idString 章节列表
      */
     @Override
-    public TestQuestion[] getQuestionArray(int type, String idString){
+    public TestQuestion[] getQuestionArray(int type, String idString) {
         TestQuestion question = new TestQuestion();
         question.setType(type);
-        question.setChapterId(idString.substring(1,idString.length()-1));
+        question.setChapterId(idString.substring(1, idString.length() - 1));
         return questionMapper.getQuestionThroughPaperGenerate(question);
     }
 

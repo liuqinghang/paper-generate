@@ -3,6 +3,7 @@ package com.work.university.controller;
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.Selector;
 import com.work.university.domain.paper.Paper;
+import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import com.work.university.service.PaperService;
 import com.work.university.service.QuestionService;
@@ -31,9 +32,16 @@ public class PaperController {
      * 获取智能组卷结果
      * @return
      */
-    @GetMapping("/getSmartPaperList")
-    public AjaxResult getSmartPaperList(){
-        Paper res = paperService.getSmartPaper(new RuleBean(),questionService);
+    @PostMapping("/getSmartPaperList")
+    public AjaxResult getSmartPaperList(@RequestBody RuleBean rule){
+        Paper res = paperService.getSmartPaper(rule,questionService);
+        List<TestQuestion> qList = res.getQuestionList();
+        for(TestQuestion t : qList){
+            int ts = t.getQuestionId();
+            List<SingleChoose> tar = questionService.getQuestionSingleChoose(String.valueOf(ts));
+            t.setDetail(tar);
+        }
+        res.setQuestionList(qList);
         return AjaxResult.success(res);
     }
     /**

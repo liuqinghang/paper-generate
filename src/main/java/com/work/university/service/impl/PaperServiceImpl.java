@@ -55,22 +55,23 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public Paper getSmartPaper(RuleBean rule, QuestionService questionService) {
         Paper resultPaper = null;
+        rule.setTotalMark();
         // 迭代计数器
         int count = 0;
         int runCount = 100;
         // 适应度期望值
         double expand = 0.98;
         // 可自己初始化组卷规则rule
-        rule = new RuleBean();
-        rule.setTotalMark(20);
-        rule.setDifficulty(4.5);
-        rule.setSingleNum(2);
-        rule.setSingleScore(3);
-        rule.setMultiNum(1);
-        rule.setMultiScore(4);
-        rule.setSubjectiveNum(1);
-        rule.setSubjectiveScore(10);
-        rule.setPointIds("1#2#3#4#5#");
+//        rule = new RuleBean();
+//        rule.setTotalMark(20);
+//        rule.setDifficulty(4.5);
+//        rule.setSingleNum(2);
+//        rule.setSingleScore(3);
+//        rule.setMultiNum(1);
+//        rule.setMultiScore(4);
+//        rule.setSubjectiveNum(1);
+//        rule.setSubjectiveScore(10);
+//        rule.setPointIds("1#2#3#4#5#");
         if (rule != null) {
             // 初始化种群
             Population population = new Population(20, true, rule,questionService);

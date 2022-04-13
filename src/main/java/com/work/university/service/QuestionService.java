@@ -3,6 +3,7 @@ package com.work.university.service;
 
 
 import com.work.university.domain.Selector;
+import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public interface QuestionService {
      * @return
      */
     public List getQuestion(TestQuestion question);
+
+    /**
+     * 获取单选题对应的所有选项
+     */
+    public List<SingleChoose> getQuestionSingleChoose(String questionId);
 
     /**
      * 根据 rule的设定 获取对应的试题集

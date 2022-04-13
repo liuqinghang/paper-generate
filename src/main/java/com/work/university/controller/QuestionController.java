@@ -1,6 +1,7 @@
 package com.work.university.controller;
 
 import com.work.university.domain.Selector;
+import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,21 @@ public class QuestionController {
     @PostMapping("/getQuestion")
     public AjaxResult getQuestion(@RequestBody TestQuestion question){
         List<TestQuestion> res = questionService.getQuestion(question);
+        for(TestQuestion t : res){
+            int ts = t.getQuestionId();
+            List<SingleChoose> tar = questionService.getQuestionSingleChoose(String.valueOf(ts));
+            t.setDetail(tar);
+        }
+        return AjaxResult.success(res);
+    }
+
+    /**
+     * 获取试题对应的详情,比如单选题对应的选项
+     * 只用于获取单选题的所有选项  -  v1.0
+     */
+    @GetMapping("/getDetail")
+    public AjaxResult getDetail(@RequestParam(value="questionId", required = true) String questionId){
+        List<SingleChoose> res = questionService.getQuestionSingleChoose(questionId);
         return AjaxResult.success(res);
     }
 

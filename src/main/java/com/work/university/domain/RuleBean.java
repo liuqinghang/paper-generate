@@ -81,4 +81,12 @@ public class RuleBean {
         this.pointIds = new ArrayList<>(new HashSet<>(Arrays.asList(pointIds.split("#"))));
     }
 
+    public void setTotalMark(){
+        this.totalMark = 0;
+        this.totalMark+= this.singleNum*this.singleScore;
+        this.totalMark+= this.multiNum*this.multiScore;
+        this.totalMark+= this.completeNum*this.completeScore;
+        this.totalMark+= this.subjectiveNum*this.subjectiveScore;
+    }
+
 }
