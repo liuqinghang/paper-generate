@@ -59,4 +59,8 @@ public interface QuestionService {
      * @param question 排除当前节点
      */
     public TestQuestion[]getQuestionListWithOutSId(TestQuestion question);
+
+
+    public int getViews(Integer id);
+    public void views(Integer id);
 }

@@ -4,6 +4,9 @@ import com.work.university.domain.Selector;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -47,4 +50,16 @@ public interface QuestionMapper {
     public List<TestQuestion> getQuestion(TestQuestion question);
 
     public TestQuestion[] getQuestionThroughPaperGenerate(TestQuestion question);
+
+    /**
+     * 测试redis 浏览量缓存
+     * @param questionId
+     * @return
+     */
+    @Select("SELECT page_view FROM question_view WHERE question_id=#{questionId}")
+    Integer getLikesByPrimaryKey(Integer questionId);
+
+    @Update("UPDATE question_view SET page_view=#{pageView} WHERE question_id=#{questionId}")
+    void setLikesByPrimaryKey(@Param("pageView")Integer pageView, @Param("questionId")Integer questionId);
+
 }

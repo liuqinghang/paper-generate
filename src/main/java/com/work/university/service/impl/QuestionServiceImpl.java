@@ -8,15 +8,13 @@ import com.work.university.domain.Selector;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 import com.work.university.mapper.QuestionMapper;
+import com.work.university.tools.utils.RedisUtil;
 import com.work.university.tools.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.work.university.service.QuestionService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -29,6 +27,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
 
     /**
      * 获取试题类型
@@ -156,6 +158,57 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public TestQuestion[] getQuestionListWithOutSId(TestQuestion question) {
         return questionMapper.getQuestionThroughPaperGenerate(question);
+    }
+
+
+    /**
+     * 测试redis浏览量 缓存功能
+     * 命名
+     */
+    private static String VIEW_KEY(Integer questionId){
+        return "QV:" + questionId;
+    }
+
+    //从redis里取出点赞数
+    private Integer getLikesFromRedis(Integer questionId){
+        Integer likes;
+        try{
+            //从redis中取出键为LIKE_KEY(Integer id)的值
+            likes = (Integer)redisUtil.get(VIEW_KEY(questionId));
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return likes;
+    }
+
+    @Override
+    public int getViews(Integer id){
+        Integer views = getLikesFromRedis(id);
+        //如果redis里能取出一个非null值（说明redis有维护这个帖子的点赞数），就直接返回
+        if(views != null)return views;
+
+        //redis中没存点赞数的情况
+        //先从mysql里把点赞数取出来
+        views = Optional.ofNullable(questionMapper.getLikesByPrimaryKey(id)).orElse(0);
+
+        //存到redis里
+        redisUtil.set(VIEW_KEY(id),views);
+        return views;
+    }
+
+    @Override
+    public void views(Integer id){
+        Integer views = getLikesFromRedis(id);
+        //如果redis里能取出一个非null值（说明redis有维护这个帖子的点赞数），就直接在原基础上+1
+        if(views != null){
+            redisUtil.set(VIEW_KEY(id),views + 1);
+        }else{
+            //redis取不出，就从mysql取
+            views = Optional.ofNullable(questionMapper.getLikesByPrimaryKey(id)).orElse(0);
+            //存到redis里
+            redisUtil.set(VIEW_KEY(id),views + 1);
+        }
     }
 
 
