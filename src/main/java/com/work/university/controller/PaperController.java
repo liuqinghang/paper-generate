@@ -1,7 +1,6 @@
 package com.work.university.controller;
 
 import com.work.university.domain.RuleBean;
-import com.work.university.domain.Selector;
 import com.work.university.domain.paper.Paper;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;

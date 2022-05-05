@@ -1,9 +1,7 @@
 package com.work.university.service.impl;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.work.university.domain.Selector;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
