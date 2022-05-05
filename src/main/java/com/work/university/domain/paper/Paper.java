@@ -3,11 +3,9 @@ package com.work.university.domain.paper;
 
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.question.TestQuestion;
+import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -17,11 +15,12 @@ import java.util.stream.Collectors;
  * @date
  * @version: 1.0
  */
+@Data
 public class Paper {
     /**
      * 个体id
      */
-    private int id;
+    private Integer id;
     /**
      * 适应度
      */
@@ -43,6 +42,24 @@ public class Paper {
      */
     private List<TestQuestion> questionList = new ArrayList<TestQuestion>();
 
+    /**
+     * paper_id -- db
+     */
+    public Integer paperId;
+    /**
+     * paper_name
+     */
+    public String paperName;
+    /**
+     * paper_content -- idString
+     */
+    public String paperContent;
+    public String paperInfo;
+    public String createUser;
+    public Date createTime;
+    public String permission;
+    public String delFlag;
+
     public Paper(int size) {
         for (int i = 0; i < size; i++) {
             questionList.add(null);
@@ -53,6 +70,9 @@ public class Paper {
         super();
     }
 
+    public void setTotalScore(double score){
+        this.totalScore = score;
+    }
     /**
      * 计算试卷总分
      *
@@ -68,7 +88,31 @@ public class Paper {
         }
         return totalScore;
     }
+    /**
+     * 保存试卷对应所有试题的id
+     */
+    public void setContent(String idString){
+        this.paperContent = idString;
+    }
+    /**
+     * 计算试卷对应所有试题的id
+     */
+    public String getContent(){
+        Integer id = this.questionList.get(0).getQuestionId();
+        String idString = String.valueOf(id);
+        for (int i = 1; i < this.questionList.size(); i++) {
+            idString += "," + this.questionList.get(i).getQuestionId();
+        }
+        return idString;
+    }
 
+    /**
+     * 计算试卷难度
+     * @param difficulty
+     */
+    public void setDifficulty(double difficulty){
+        this.difficulty = difficulty;
+    }
     /**
      * 计算试卷个体难度系数 计算公式： 每题难度*分数求和除总分
      *
@@ -173,7 +217,7 @@ public class Paper {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -193,4 +237,21 @@ public class Paper {
         this.questionList = questionList;
     }
 
+
+
+    public void setPaperId(Integer id) {
+        this.paperId = id;
+    }
+
+    public String getUserId() {
+        return this.createUser;
+    }
+
+    public void setUserId(Integer id) {
+        this.createUser = String.valueOf(id);
+    }
+
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
 }

@@ -47,10 +47,15 @@ public class PaperController {
     /**
      * TODO
      * 保存手动组卷结果
+     * paper中应该包含 组卷的所有试题以及对应的难度(可自己设定)
+     *      需要的参数有
      */
     @PostMapping("/savePaper")
     public AjaxResult savePaper(@RequestBody Paper paper){
-
+        paper.setTotalScore(paper.getTotalScore());
+        paper.setDifficulty(paper.getDifficulty());
+        paper.setContent(paper.getContent());
+        paperService.savePaper(paper);
         return AjaxResult.success();
     }
     /**
@@ -68,11 +73,24 @@ public class PaperController {
     }
 
     /**
-     * 保存试卷结果
+     * 获取组卷
      */
-    @GetMapping("/savePaper")
-    public AjaxResult saveQuestion(@RequestBody TestQuestion question){
-        return AjaxResult.success();
+    @GetMapping("/getPaper")
+    public AjaxResult getPaper(@RequestParam(name = "userId",required = false)Integer userId,
+                               @RequestParam(name = "paperName",required = false)String paperName,
+                               @RequestParam(name = "paperId",required = false)Integer paperId){
+        Paper paper = new Paper();
+        if(paperId != null) {
+            paper.setPaperId(paperId);
+        }
+        if(paperName != null && paperName != "") {
+            paper.setPaperName(paperName);
+        }
+        if(userId != null) {
+            paper.setUserId(userId);
+        }
+        List<Paper> res = paperService.getPaper(paper);
+        return AjaxResult.success(res);
     }
 
 

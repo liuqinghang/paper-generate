@@ -23,4 +23,18 @@ public interface PaperService {
      */
     public Paper getSmartPaper(RuleBean rule, QuestionService questionService);
 
+    /**
+     * 保存组卷结果
+     */
+    public void savePaper(Paper paper);
+
+    /**
+     * 获取所有满足条件的Paper
+     * @param paper - paperId
+     *              - paperName
+     *              - createUser
+     * @return
+     */
+    public List<Paper> getPaper(Paper paper);
+
 }

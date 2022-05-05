@@ -20,8 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where subject_id = #{subjectId}
     </select>
 
-    <select id="getQuestion" parameterType="com.work.university.domain.TestQuestion" resultType="com.work.university.domain.TestQuestion">
-        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+    <select id="getQuestion" parameterType="com.work.university.domain.question.TestQuestion" resultType="com.work.university.domain.question.TestQuestion">
+        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_id, s.subject_name as subject,c.chapter_id, c.chapter ,q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
         from test_question as q
         inner join question_knowledge as k on k.question_id = q.question_id
         left join user on user.user_id	= q.master
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join chapter as c on c.chapter_id = k.chapter_id
         <where>
             <if test="questionId != null  and questionId >0"> and q.question_id = #{questionId}</if>
-            <if test="type != null and type >0"> and q.type = #{type}</if>
+            <if test="type != null and type >0"> and k.type = #{type}</if>
             <if test="subject != null and subject >0"> and q.subject_id = #{subject}</if>
             <if test="master != null and master != ''"> and q.master = #{master}</if>
             <if test="chapter != null and chapter != ''"> and k.chapter_id = #{chapter}</if>
@@ -38,7 +38,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-    <insert id="saveQuestion" parameterType="com.work.university.domain.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
+    <select id="getQuestionThroughPaperGenerate" parameterType="com.work.university.domain.question.TestQuestion" resultType="com.work.university.domain.question.TestQuestion">
+        select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, c.chapter_id , c.chapter, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+        from test_question as q
+        inner join question_knowledge as k on k.question_id = q.question_id
+        left join user on user.user_id	= q.master
+        left join subject as s on s.subject_id = k.subject_id
+        left join question_type as t on t.type = k.type
+        left join chapter as c on c.chapter_id = k.chapter_id
+        <where>
+            <if test="questionId != null  and questionId >0"> and q.question_id != #{questionId}</if>
+            <if test="type != null and type >0"> and k.type = #{type}</if>
+            <if test="chapterId != null and chapterId != ''"> and k.chapter_id in
+                <foreach item="item" index="index" collection="chapterId.split(',')" open="(" separator="," close=")">
+                    <if test="item != null and item != ''">#{item}</if>
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <insert id="saveQuestion" parameterType="com.work.university.domain.question.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
         insert into test_question
                 <trim prefix="(" suffix=")" suffixOverrides=",">
                     <if test="content != null and content != ''">content,</if>
@@ -59,8 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     <if test="content != null and content != ''">#{content},</if>
                     <if test="answer != null">#{answer},</if>
                     <if test="count != null">#{count},</if>
-                    <if test="subject != null">#{subject},</if>
                     <if test="type != null">#{type},</if>
+                    <if test="subject != null">#{subject},</if>
                     <if test="difficulty != null">#{difficulty},</if>
                     <if test="createTime != null">#{createTime},</if>
                     <if test="master != null">#{master},</if>
@@ -72,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  </trim>
     </insert>
 
-    <insert id="saveQuestionKnowledge" parameterType="com.work.university.domain.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
+    <insert id="saveQuestionKnowledge" parameterType="com.work.university.domain.question.TestQuestion" useGeneratedKeys="true" keyProperty="questionId">
         insert into question_knowledge
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="questionId != null and questionId != ''">question_id,</if>
@@ -98,7 +118,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
     </insert>
 
-    <update id="modifyQuestion" parameterType="com.work.university.domain.TestQuestion">
+    <insert id="saveQuestionSingleChoose" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="choosedId">
+        insert into single_choose (question_id, choosed_content)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.questionId},
+            #{item.choosedContent}
+            )
+        </foreach>
+    </insert>
+    <select id="getQuestionSingleChoose" parameterType="String" resultType="com.work.university.domain.question.SingleChoose">
+        select choosed_id, question_id, choosed_content
+        from single_choose
+        <where> question_id in
+            <foreach item="item" index="index" collection="questionId.split(',')" open="(" separator="," close=")">
+                <if test="item != null and item != ''">#{item}</if>
+            </foreach>
+        </where>
+    </select>
+
+    <update id="modifyQuestion" parameterType="com.work.university.domain.question.TestQuestion">
         update test_question
         <trim prefix="SET" suffixOverrides=",">
             <if test="content != null and content != ''">content = #{content},</if>

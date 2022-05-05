@@ -6,6 +6,7 @@ import com.work.university.GenerateAlgorithm.test.GA;
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.Selector;
 import com.work.university.domain.paper.Paper;
+import com.work.university.domain.question.TestQuestion;
 import com.work.university.domain.util.TreeSelect;
 import com.work.university.domain.util.TreeSelectEntity;
 import com.work.university.mapper.PaperMapper;
@@ -14,6 +15,8 @@ import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.Temporal;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -89,6 +92,38 @@ public class PaperServiceImpl implements PaperService {
 
 
         return resultPaper;
+    }
+
+
+    /**
+     * 保存组卷结果
+     *
+     * @param paper
+     */
+    @Override
+    public void savePaper(Paper paper) {
+        paper.setCreateTime(new Date());
+        paper.setCreateUser("1");
+        paper.setPermission("0");
+        paperMapper.savePaper(paper);
+    }
+
+    /**
+     * 获取所有满足条件的Paper
+     *
+     * @param paper - paperId
+     *              - paperName
+     *              - createUser
+     * @return
+     */
+    @Override
+    public List<Paper> getPaper(Paper paper) {
+        List<Paper> res = paperMapper.getPaper(paper);
+
+//        for(Paper p : res){
+//            TestQuestion[] questionList = questionService.getQuestionArray(0,paper.getContent());
+//        }
+        return res;
     }
 
 

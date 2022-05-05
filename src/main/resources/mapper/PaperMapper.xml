@@ -13,7 +13,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
+    <insert id="savePaper" parameterType="com.work.university.domain.paper.Paper" useGeneratedKeys="true" keyProperty="paperId">
+        insert into paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperName != null">paper_name,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="paperContent != null">paper_content,</if>
+            <if test="difficulty != null">difficulty,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUser != null">create_user</if>
+            <if test="paperInfo != null">paper_info,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperName != null">#{paperName},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="paperContent != null">#{paperContent},</if>
+            <if test="difficulty != null">#{difficulty},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUser != null">#{createUser}</if>
+            <if test="paperInfo != null">#{paperInfo},</if>
+            <if test="delFlag != null">#{delFlag}</if>
+        </trim>
+    </insert>
 
-
-
+    <select id="getPaper" parameterType="com.work.university.domain.paper.Paper" resultType="com.work.university.domain.paper.Paper">
+        select paper_id, paper_name, total_score, paper_content, difficulty, create_time, del_flag
+        from paper
+        <where>
+         <if test="paperId != null">and paper_id = #{paperId}</if>
+         <if test="paperName != null">and paper_name like concat('%',#{paperName},'%')</if>
+         <if test="createUser != null">and create_user = #{createUser}</if>
+        </where>
+    </select>
 </mapper>

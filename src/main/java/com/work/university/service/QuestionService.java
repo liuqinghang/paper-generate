@@ -3,7 +3,8 @@ package com.work.university.service;
 
 
 import com.work.university.domain.Selector;
-import com.work.university.domain.TestQuestion;
+import com.work.university.domain.question.SingleChoose;
+import com.work.university.domain.question.TestQuestion;
 
 import java.util.List;
 import java.util.Map;
@@ -41,4 +42,25 @@ public interface QuestionService {
      * @return
      */
     public List getQuestion(TestQuestion question);
+
+    /**
+     * 获取单选题对应的所有选项
+     */
+    public List<SingleChoose> getQuestionSingleChoose(String questionId);
+
+    /**
+     * 根据 rule的设定 获取对应的试题集
+     * @param type 试题类型
+     * @param idString 章节列表
+     */
+    public TestQuestion[] getQuestionArray(int type, String idString);
+    /**
+     * 根据 rule的设定 获取对应的试题集
+     * @param question 排除当前节点
+     */
+    public TestQuestion[]getQuestionListWithOutSId(TestQuestion question);
+
+
+    public int getViews(Integer id);
+    public void views(Integer id);
 }
