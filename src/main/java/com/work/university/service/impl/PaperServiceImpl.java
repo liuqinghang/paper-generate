@@ -6,7 +6,6 @@ import com.work.university.GenerateAlgorithm.test.GA;
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.Selector;
 import com.work.university.domain.paper.Paper;
-import com.work.university.domain.question.TestQuestion;
 import com.work.university.domain.util.TreeSelect;
 import com.work.university.domain.util.TreeSelectEntity;
 import com.work.university.mapper.PaperMapper;
@@ -15,7 +14,6 @@ import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;

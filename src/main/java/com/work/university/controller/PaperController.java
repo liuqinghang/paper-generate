@@ -82,7 +82,7 @@ public class PaperController {
         if(paperId != null) {
             paper.setPaperId(paperId);
         }
-        if(paperName != null && paperName != "") {
+        if(StringUtils.isNotNull(paperName) && !"".equals(paperName)) {
             paper.setPaperName(paperName);
         }
         if(userId != null) {
