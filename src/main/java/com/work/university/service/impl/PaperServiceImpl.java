@@ -73,7 +73,7 @@ public class PaperServiceImpl implements PaperService {
 //        rule.setSubjectiveNum(1);
 //        rule.setSubjectiveScore(10);
 //        rule.setPointIds("1#2#3#4#5#");
-        if (rule != null) {
+//        if (rule != null) {
             // 初始化种群
             Population population = new Population(20, true, rule,questionService);
             System.out.println("初次适应度  " + population.getFitness().getAdaptationDegree());
@@ -85,7 +85,7 @@ public class PaperServiceImpl implements PaperService {
             System.out.println("进化次数： " + count);
             System.out.println(population.getFitness().getAdaptationDegree());
             resultPaper = population.getFitness();
-        }
+//        }
         System.out.println(resultPaper);
 
 

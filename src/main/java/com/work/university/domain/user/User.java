@@ -6,14 +6,14 @@ import java.util.Date;
 
 @Data
 public class User {
-    public String userId;
-    public String name;
-    public String username;
-    public String password;
-    public String sex;
-    public String department;
-    public Date createTime;
-    public Date updateTime;
-    public String userType;
-    public String delFlag;
+    private String userId;
+    private String name;
+    private String username;
+    private String password;
+    private String sex;
+    private String department;
+    private Date createTime;
+    private Date updateTime;
+    private String userType;
+    private String delFlag;
 }

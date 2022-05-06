@@ -75,7 +75,7 @@ public class RuleBean {
     public void setPointIds(String pointIds) {
         // 是否是表单传过来的数据
         if (pointIds.endsWith("#")) {
-            pointIds = pointIds.substring(0, pointIds.lastIndexOf("#"));
+            pointIds = pointIds.substring(0, pointIds.lastIndexOf('#'));
         }
         // 使用HashSet去重
         this.pointIds = new ArrayList<>(new HashSet<>(Arrays.asList(pointIds.split("#"))));
