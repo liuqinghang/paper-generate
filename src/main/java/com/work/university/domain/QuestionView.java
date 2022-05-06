@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class QuestionView {
-    public long questionId;
-    public long pageView;
+    private long questionId;
+    private long pageView;
 }

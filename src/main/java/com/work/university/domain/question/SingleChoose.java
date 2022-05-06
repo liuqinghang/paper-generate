@@ -9,9 +9,9 @@ import lombok.Data;
 @Data
 public class SingleChoose {
 
-    public int choosedId;
+    private int choosedId;
 
-    public int questionId;
+    private int questionId;
 
-    public String choosedContent;
+    private String choosedContent;
 }

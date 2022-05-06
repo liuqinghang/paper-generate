@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Bean;
 @Data
 public class QuestionType {
 
-    public int type;
+    private int type;
 
-    public String typeName;
+    private String typeName;
 
-    public String remark;
+    private String remark;
 
 }

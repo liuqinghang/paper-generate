@@ -14,13 +14,13 @@ public class Selector {
     /**
      * 标签内容
      */
-    public String selectLabel;
+    private String selectLabel;
     /**
      * 唯一标识
      */
-    public String selectKey;
+    private String selectKey;
     /**
      * 标签值
      */
-    public String selectValue;
+    private String selectValue;
 }

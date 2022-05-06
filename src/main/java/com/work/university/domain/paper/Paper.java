@@ -45,20 +45,20 @@ public class Paper {
     /**
      * paper_id -- db
      */
-    public Integer paperId;
+    private Integer paperId;
     /**
      * paper_name
      */
-    public String paperName;
+    private String paperName;
     /**
      * paper_content -- idString
      */
-    public String paperContent;
-    public String paperInfo;
-    public String createUser;
-    public Date createTime;
-    public String permission;
-    public String delFlag;
+    private String paperContent;
+    private String paperInfo;
+    private String createUser;
+    private Date createTime;
+    private String permission;
+    private String delFlag;
 
     public Paper(int size) {
         for (int i = 0; i < size; i++) {
