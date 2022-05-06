@@ -52,7 +52,7 @@ public class PaperController {
     @PostMapping("/savePaper")
     public AjaxResult savePaper(@RequestBody Paper paper){
         paper.setTotalScore(paper.getTotalScore());
-        paper.setDifficulty(paper.getDifficulty());
+//        paper.setDifficulty(paper.getDifficulty());
         paper.setContent(paper.getContent());
         paperService.savePaper(paper);
         return AjaxResult.success();

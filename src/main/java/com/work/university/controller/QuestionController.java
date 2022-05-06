@@ -1,6 +1,5 @@
 package com.work.university.controller;
 
-import com.sun.istack.internal.NotNull;
 import com.work.university.domain.Selector;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
@@ -116,12 +115,12 @@ public class QuestionController {
      * test redis cache
      */
     @GetMapping("/{id}")
-    public AjaxResult getLikes(@NotNull @PathVariable Integer id){
+    public AjaxResult getLikes( @PathVariable Integer id){
         return AjaxResult.success(questionService.getViews(id));
     }
 
     @PostMapping("/{id}")
-    public AjaxResult likes(@NotNull @PathVariable Integer id){
+    public AjaxResult likes( @PathVariable Integer id){
         questionService.views(id);
         return AjaxResult.success(questionService.getViews(id));
     }
