@@ -3,6 +3,7 @@ package com.work.university.domain.paper;
 
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.question.TestQuestion;
+import com.work.university.tools.utils.StringUtils;
 import lombok.Data;
 
 import java.util.*;
@@ -91,13 +92,16 @@ public class Paper {
     /**
      * 保存试卷对应所有试题的id
      */
-    public void setContent(String idString){
+    public void setPaperContent(String idString){
         this.paperContent = idString;
     }
     /**
      * 计算试卷对应所有试题的id
      */
-    public String getContent(){
+    public String getPaperContents(){
+        if(this.questionList.size() < 1){
+            return this.paperContent;
+        }
         Integer id = this.questionList.get(0).getQuestionId();
         String idString = String.valueOf(id);
         for (int i = 1; i < this.questionList.size(); i++) {

@@ -125,6 +125,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
+     * 获取所有试题
+     *
+     * @param idString
+     * @return
+     */
+    @Override
+    public List getQuestionByIds(String idString) {
+        return questionMapper.getQuestionByIds(idString);
+    }
+
+    /**
      * 获取单选题对应的所有选项
      *
      * @param questionId

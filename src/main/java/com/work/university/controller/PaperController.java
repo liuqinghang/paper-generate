@@ -53,7 +53,7 @@ public class PaperController {
     public AjaxResult savePaper(@RequestBody Paper paper){
         paper.setTotalScore(paper.getTotalScore());
 //        paper.setDifficulty(paper.getDifficulty());
-        paper.setContent(paper.getContent());
+        paper.setPaperContent(paper.getPaperContents());
         paperService.savePaper(paper);
         return AjaxResult.success();
     }

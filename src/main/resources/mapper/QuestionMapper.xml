@@ -38,6 +38,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="getQuestionByIds" parameterType="String" resultType="com.work.university.domain.question.TestQuestion">
+    select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_id, s.subject_name as subject,c.chapter_id, c.chapter ,q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
+        from test_question as q
+        inner join question_knowledge as k on k.question_id = q.question_id
+        left join user on user.user_id	= q.master
+        left join subject as s on s.subject_id = k.subject_id
+        left join question_type as t on t.type = k.type
+        left join chapter as c on c.chapter_id = k.chapter_id
+        <where>
+            <if test="idString != ''">  and q.question_id in
+                <foreach item="item" index="index" collection="idString.split(',')" open="(" separator="," close=")">
+                    <if test="item != null and item != ''">#{item}</if>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
     <select id="getQuestionThroughPaperGenerate" parameterType="com.work.university.domain.question.TestQuestion" resultType="com.work.university.domain.question.TestQuestion">
         select q.question_id, q.content, q.answer, q.count, t.type, t.type_name, s.subject_name as subject, c.chapter_id , c.chapter, q.difficulty, q.master, user.username as masterName, q.create_time, q.update_time, q.update_user, q.permission, q.star, q.del_flag
         from test_question as q

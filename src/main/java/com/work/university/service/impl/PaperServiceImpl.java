@@ -6,6 +6,7 @@ import com.work.university.GenerateAlgorithm.test.GA;
 import com.work.university.domain.RuleBean;
 import com.work.university.domain.Selector;
 import com.work.university.domain.paper.Paper;
+import com.work.university.domain.question.TestQuestion;
 import com.work.university.domain.util.TreeSelect;
 import com.work.university.domain.util.TreeSelectEntity;
 import com.work.university.mapper.PaperMapper;
@@ -14,9 +15,7 @@ import com.work.university.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -118,9 +117,10 @@ public class PaperServiceImpl implements PaperService {
     public List<Paper> getPaper(Paper paper) {
         List<Paper> res = paperMapper.getPaper(paper);
 
-//        for(Paper p : res){
-//            TestQuestion[] questionList = questionService.getQuestionArray(0,paper.getContent());
-//        }
+        for(Paper p : res){
+            ArrayList<TestQuestion> questionList = (ArrayList<TestQuestion>) questionService.getQuestionByIds(p.getPaperContent());
+            p.setQuestionList(questionList);
+        }
         return res;
     }
 

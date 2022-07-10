@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <select id="getPaper" parameterType="com.work.university.domain.paper.Paper" resultType="com.work.university.domain.paper.Paper">
-        select paper_id, paper_name, total_score, paper_content, difficulty, create_time, del_flag
+        select paper_id as id ,paper_id, paper_name, total_score, paper_content, difficulty, create_time, del_flag
         from paper
         <where>
          <if test="paperId != null">and paper_id = #{paperId}</if>

@@ -49,6 +49,11 @@ public interface QuestionMapper {
      */
     public List<TestQuestion> getQuestion(TestQuestion question);
 
+    /**
+     * 获取所有试题by idString
+     */
+    public List<TestQuestion> getQuestionByIds(String idString);
+
     public TestQuestion[] getQuestionThroughPaperGenerate(TestQuestion question);
 
     /**

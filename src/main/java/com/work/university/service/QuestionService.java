@@ -6,6 +6,7 @@ import com.work.university.domain.Selector;
 import com.work.university.domain.question.SingleChoose;
 import com.work.university.domain.question.TestQuestion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,13 @@ public interface QuestionService {
      * @return
      */
     public List getQuestion(TestQuestion question);
+
+
+    /**
+     * 获取所有试题
+     * @return
+     */
+    public List getQuestionByIds(String idString);
 
     /**
      * 获取单选题对应的所有选项
